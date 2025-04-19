@@ -11,6 +11,13 @@ function getLocale(request: NextRequest): string | undefined {
   const negotiatorHeaders: Record<string, string> = {};
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
 
+  const cookies = request.cookies
+  const lang = cookies.get('lang')
+
+  if (lang && lang.value && i18n.locales.includes(lang.value as any)) {
+    return lang.value;
+  }
+
   // @ts-ignore locales are readonly
   const locales: string[] = i18n.locales;
 

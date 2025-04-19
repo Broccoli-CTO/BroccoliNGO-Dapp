@@ -32,7 +32,6 @@ export default function TaskDetailPageContent({ id }: { id: string }) {
 
   return (
     <Container>
-      <TaskNavbar />
 
       <DatasView email={task?.email} />
 

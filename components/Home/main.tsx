@@ -17,6 +17,7 @@ import { isBeta, mainChain } from "@/shared/constant";
 import { BSC_RPC_URL } from "@/shared/constant";
 import { Trading } from "./trading";
 import { useI18n } from "../ui/I18nProvider";
+import Header from "../Header";
 // import { useDisclosure } from "@heroui/react";
 
 const TOTAL_COUNT = 76 + 65 + 500 + 400;
@@ -456,6 +457,7 @@ function HomeMain() {
 export default function WrappedHomeMain() {
   return (
     <Suspense>
+      <Header />
       <HomeMain />
     </Suspense>
   );

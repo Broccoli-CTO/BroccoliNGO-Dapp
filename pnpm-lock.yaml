@@ -68,6 +68,9 @@ dependencies:
   gsap:
     specifier: ^3.12.7
     version: 3.12.7
+  js-cookie:
+    specifier: ^3.0.5
+    version: 3.0.5
   jsonwebtoken:
     specifier: ^9.0.2
     version: 9.0.2
@@ -139,6 +142,9 @@ devDependencies:
   '@types/formidable':
     specifier: ^3.4.5
     version: 3.4.5
+  '@types/js-cookie':
+    specifier: ^3.0.6
+    version: 3.0.6
   '@types/jsonwebtoken':
     specifier: ^9.0.9
     version: 9.0.9
@@ -2640,6 +2646,10 @@ packages:
     resolution: {integrity: sha512-s7YPsNVfnsng5L8sKnG/Gbb2tiwwJTY1conOkJzTMRvJAlLFW1nEua+ADsJQu8N1c0oTHx9+d5nqg10WuT9gHQ==}
     dependencies:
       '@types/node': 20.17.24
+    dev: true
+
+  /@types/js-cookie@3.0.6:
+    resolution: {integrity: sha512-wkw9yd1kEXOPnvEeEV1Go1MmxtBJL0RR79aOTAApecWFVu7w0NNXNqhcWgvw2YgZDYadliXkl14pa3WXw5jlCQ==}
     dev: true
 
   /@types/json-schema@7.0.15:
