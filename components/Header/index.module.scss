@@ -128,6 +128,9 @@
   font-family: var(--font-darumadrop-one);
   font-size: 20px;
   color: #A0C1D7;
+  >span {
+    transform: translateY(-2px);
+  }
 
   @media (max-width: 640px) {
     border-radius: 8px;
