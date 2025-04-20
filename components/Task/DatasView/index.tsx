@@ -9,23 +9,45 @@ import styled from "@emotion/styled";
 import PendingIcon from "@/components/icons/pending";
 import ApprovedIcon from "@/components/icons/approved";
 import RejectedIcon from "@/components/icons/rejected";
+import { useI18n } from "@/components/ui/I18nProvider";
 
 interface DatasViewProps {
   email?: string;
 }
 
 export const DatasView: FC<DatasViewProps> = ({ email }) => {
-  const {
-    loading,
-    taskMetaData,
-    taskStatus,
-  } = useTaskDetailsCtx();
+  const { loading, taskMetaData, taskStatus } = useTaskDetailsCtx();
   const publicClient = usePublicClient();
+  const { trans, lang } = useI18n();
+
+  const detectKeys = [
+    _TL_("v"),
+    _TL_("organization"),
+    _TL_("email"),
+    _TL_("country"),
+    _TL_("city"),
+    _TL_("context"),
+    _TL_("attachment"),
+    _TL_("suppliesRequest"),
+    _TL_("additionalInfo"),
+    _TL_("canProvideInvoices"),
+    _TL_("canProvidePublicAcknowledgments"),
+    // v 0.1
+    _TL_("twitter"),
+    _TL_("helpPostLink"),
+    _TL_("assistanceRequired"),
+    _TL_("totalAmount"),
+    _TL_("budgetPlan"),
+    _TL_("breakdown"),
+    _TL_("impactAfterAssistance"),
+    _TL_("canProvideInvoice"),
+    _TL_("canProvidePublicThankYouLetter"),
+  ];
 
   const datalist = useMemo(() => {
     if (!taskMetaData) return [];
-    return flattenObject(taskMetaData);
-  }, [taskMetaData]);
+    return flattenObject(taskMetaData, detectKeys);
+  }, [taskMetaData, detectKeys]);
 
   const TaskStatusIcon = useMemo(() => {
     if (taskStatus === "Pending") return <PendingIcon />;
@@ -34,24 +56,35 @@ export const DatasView: FC<DatasViewProps> = ({ email }) => {
     return null;
   }, [taskStatus]);
 
+  const transLabel = (label: string) => {
+    return lang === "zh"
+      ? trans(label)
+      : label.charAt(0).toUpperCase() +
+          label.slice(1).replace(/([A-Z])/g, " $1");
+  };
+
   return loading ? (
     <CardContainer>
       <Spinner />
     </CardContainer>
   ) : (
     <CardContainer head>
-      <CardTitle>Task Details</CardTitle>
+      <CardTitle>{trans(_TL_("Task Details"))}</CardTitle>
       <StyledTaskStatus>{TaskStatusIcon}</StyledTaskStatus>
       <StyledDataList>
         {datalist.map((item) => (
           <StyledDataListItem key={item.key}>
-            <StyledDataListItemLabel>{item.label}</StyledDataListItemLabel>
-            {item.label === "Attachment" ? (
+            <StyledDataListItemLabel>
+              {transLabel(item.label)}
+            </StyledDataListItemLabel>
+            {item.label === "attachment" ? (
               <StyledDataListItemValue>
                 <AttachmentView attachment={item.value} />
               </StyledDataListItemValue>
             ) : (
-              <StyledDataListItemValue>{item.label === "Email" ? email : item.value}</StyledDataListItemValue>
+              <StyledDataListItemValue>
+                {item.label === "Email" ? email : item.value}
+              </StyledDataListItemValue>
             )}
           </StyledDataListItem>
         ))}

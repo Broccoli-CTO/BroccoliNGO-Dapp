@@ -33,6 +33,7 @@
     "ethers": "^6.13.5",
     "formidable": "^3.5.2",
     "gsap": "^3.12.7",
+    "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "localforage": "^1.10.0",
     "lucide-react": "^0.477.0",
@@ -58,6 +59,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.14",
     "@types/formidable": "^3.4.5",
+    "@types/js-cookie": "^3.0.6",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/negotiator": "^0.6.3",
     "@types/node": "^20",

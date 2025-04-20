@@ -67,7 +67,9 @@ export const FundRecordsView: FC<Props> = ({ tokenId, admin }) => {
       }
       toaster.create({
         title: trans(_TL_("Fund Records uploaded")),
-        description: trans(_TL_("Fund records has been uploaded successfully.")),
+        description: trans(
+          _TL_("Fund records has been uploaded successfully.")
+        ),
         type: "success",
       });
       location.reload();
@@ -91,7 +93,7 @@ export const FundRecordsView: FC<Props> = ({ tokenId, admin }) => {
 
   return (
     <CardContainer>
-      <CardTitle>Fund Records</CardTitle>
+      <CardTitle>{trans(_TL_("Fund Records"))}</CardTitle>
       <StyledDataList>
         {uploadedFundRecordsDataList.map((item, idx) => {
           return (

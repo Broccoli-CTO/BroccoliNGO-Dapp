@@ -20,7 +20,12 @@ import {
 import { usePublicClient } from "wagmi";
 import { ABI, CONTRACT_ADDRESS } from "@/shared/constant";
 import { Task } from "@/shared/types/task";
-import { HelpRequest, NFTMetaData, RescueNFTMetaData, RescueRequest } from "@/shared/types/rescue";
+import {
+  HelpRequest,
+  NFTMetaData,
+  RescueNFTMetaData,
+  RescueRequest,
+} from "@/shared/types/rescue";
 import { HelpRequest2, NFTMetaData2 } from "@/shared/types/help";
 import {
   checkIsVoteOnchainMetadata,
@@ -33,6 +38,7 @@ import {
 import { VoteResult } from "@/shared/types/vote";
 import { Profile } from "@/shared/types/profile";
 import { useGlobalCtx } from "./useGlobal";
+import { useI18n } from "@/components/ui/I18nProvider";
 
 interface TaskDetailsContextType {
   isAuthor: boolean;
@@ -65,6 +71,7 @@ export const TaskDetailsProvider = ({
   tokenId: string;
   children: ReactNode;
 }) => {
+  const { lang } = useI18n();
   const { profile } = useGlobalCtx();
   const publicClient = usePublicClient();
 
@@ -110,8 +117,8 @@ export const TaskDetailsProvider = ({
     return "";
   }, [task, voteFinalResult, isApproved]);
 
-  async function getTaskData(id: string) {
-    const res = await fetchTaskDetail(id);
+  async function getTaskData(id: string, lang = "en") {
+    const res = await fetchTaskDetail(id, lang);
     if (res.code === 0) {
       setTask(res.data);
       return res.data;
@@ -140,10 +147,13 @@ export const TaskDetailsProvider = ({
     return !!res;
   };
 
-  async function loadTaskMetaData(tokenUri: string) {
-    if (!tokenUri) return null;
+  async function loadTaskMetaData(
+    tokenUri?: string,
+    metadata?: NFTMetaData | NFTMetaData2 | RescueNFTMetaData
+  ) {
     const parsed = await formatNFTMetadataToTaskRequest({
-      tokenUri
+      tokenUri,
+      metadata,
     });
     if (!parsed) return null;
     setTaskVersion(parsed.v);
@@ -152,7 +162,8 @@ export const TaskDetailsProvider = ({
         const { NFTMetaData, formatedData } = parsed;
         if (!formatedData) return null;
         setMetadataLoading(false);
-        return NFTMetaDataToRescueRequestForms(NFTMetaData as RescueNFTMetaData).request;
+        return NFTMetaDataToRescueRequestForms(NFTMetaData as RescueNFTMetaData)
+          .request;
       }
       case "0.2": {
         const { NFTMetaData, formatedData } = parsed;
@@ -192,9 +203,9 @@ export const TaskDetailsProvider = ({
 
   useEffect(() => {
     if (!tokenId) return;
-    getTaskData(tokenId)
+    getTaskData(tokenId, lang)
       .then((data) => {
-        loadTaskMetaData(data?.URI).then(async (metadata) => {
+        loadTaskMetaData(data?.URI, data?.metadata!).then(async (metadata) => {
           setTaskMetaData(metadata);
         });
         getVoteResult(tokenId);
@@ -209,7 +220,7 @@ export const TaskDetailsProvider = ({
       .finally(() => {
         setLoading(false);
       });
-  }, [tokenId]);
+  }, [tokenId, lang]);
 
   useEffect(() => {
     if (!uploadedFundRecords.length) return;

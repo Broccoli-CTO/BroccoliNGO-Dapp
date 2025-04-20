@@ -82,7 +82,7 @@ const FormRequest: React.FC<Props> = ({ onNext, onPrev }) => {
               name="suppliesRequest"
               onChange={handleInputChange}
               value={requestForm.suppliesRequest}
-              placeholder={trans(_TL_('What supplies are urgently needed? Specify exact quantities and specifications (e.g. "200kg adult dog food (chicken flavor), 10 sterile vet-grade bandages (5cm width), amoxicillin 250mg ×30 tablets, 20kg puppy milk powder (goat milk base)"')) as string}
+              placeholder={trans(_TL_('What supplies are urgently needed? Specify exact quantities and specifications (e.g. "200kg adult dog food (chicken flavor), 10 sterile vet-grade bandages (5cm width), amoxicillin 250mg x30 tablets, 20kg puppy milk powder (goat milk base)."')) as string}
               disabled={isPreviewMode}
             />
           </FormGroup>
@@ -92,7 +92,7 @@ const FormRequest: React.FC<Props> = ({ onNext, onPrev }) => {
               name="additionalInfo"
               onChange={handleInputChange}
               value={requestForm.additionalInfo}
-              placeholder={trans(_TL_('Please provide any other relevant details (e.g., special requirements, preferred brands, or delivery instructions)')) as string}
+              placeholder={trans(_TL_('Please provide any other relevant details (e.g., special requirements, preferred brands, or delivery instructions).')) as string}
               disabled={isPreviewMode}
             />
           </FormGroup>

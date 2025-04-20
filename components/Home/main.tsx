@@ -17,6 +17,7 @@ import { isBeta, mainChain } from "@/shared/constant";
 import { BSC_RPC_URL } from "@/shared/constant";
 import { Trading } from "./trading";
 import { useI18n } from "../ui/I18nProvider";
+import Header from "../Header";
 // import { useDisclosure } from "@heroui/react";
 
 const TOTAL_COUNT = 76 + 65 + 500 + 400;
@@ -153,7 +154,7 @@ function HomeMain() {
               </defs>
             </svg>
 
-            <h1>{trans(_TL_('Broccoli'))}</h1>
+            <h1>Broccoli</h1>
             <h2>{trans(_TL_('Is Helping Its Stray Animal Friends'))}</h2>
             {/* <h2>First Broccoli on BSC, $Broccoli token is managed and owned by its community, with love.</h2> */}
             {/* <Image
@@ -323,7 +324,7 @@ function HomeMain() {
             height={112}
             alt="helping"
           ></Image> */}
-            <h2>{trans(_TL_('BROCCOLI'))}</h2>
+            <h2>BROCCOLI</h2>
             <h2>{trans(_TL_('Rescued Stray Animals'))}</h2>
             <div className="counter-wrap">
               {trans(_TL_('A total of {{count}} adorable souls rescued'), {
@@ -456,6 +457,7 @@ function HomeMain() {
 export default function WrappedHomeMain() {
   return (
     <Suspense>
+      <Header />
       <HomeMain />
     </Suspense>
   );

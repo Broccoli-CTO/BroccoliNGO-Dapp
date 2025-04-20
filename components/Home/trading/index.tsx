@@ -62,9 +62,8 @@ export const Trading = () => {
   return (
     <Container>
       <Title>
-        {trans(_TL_('BROCCOLI {{br}} trading live on:'), {
-          br: <br />,
-        })}
+        <p>BROCCOLI</p>
+        {trans(_TL_('trading live on:'))}
       </Title>
 
       <Border>

@@ -1,16 +1,11 @@
+import { HelpRequest2, NFTMetaData2 } from "./help";
+import { HelpRequest, NFTMetaData, RescueNFTMetaData, RescueRequest } from "./rescue";
+
 export interface Task {
-  id: string;
   URI: string;
   txHash: string;
   nftId: string;
-  title: string;
-  desc: string;
-  image: string;
   created_at: string;
-  updatedAt: string;
-  location?: string;
-  socialLink?: string;
-  helpPics?: string[];
   address?: string;
   status: number;
   isVoteEnabled: boolean;
@@ -20,4 +15,5 @@ export interface Task {
   vote_end_date: number;
   isAuthor: boolean;
   email: string;
+  metadata: NFTMetaData | NFTMetaData2 | RescueNFTMetaData | null;
 }

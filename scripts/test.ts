@@ -8,7 +8,6 @@ import { getPrivyUserInfoByAccessToken } from "@/shared/server/privy";
   return this.toString();
 };
 
-
 const BASE_URI = 'http://localhost:3000';
 const testBody = {}
 

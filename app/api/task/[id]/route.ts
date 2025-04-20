@@ -11,6 +11,8 @@ export async function GET(
 ) {
   try {
     const id = (await params).id;
+    const { searchParams } = new URL(request.url);
+    const lang = searchParams.get("lang") || "en";
 
     const { user } = await userAuth(false);
 
@@ -34,32 +36,42 @@ export async function GET(
       throw new Error("Task not found", { cause: 404 });
     }
 
+    const { nftId, URI, approved, created_at, status, xHandle, metadata_en, metadata_zh, metadata, email, vote_start_date, vote_end_date } = task
+
     const isVoteEnabled =
-      !!task.vote_start_date &&
-      Date.now() >= new Date(task.vote_start_date).getTime();
+      !!vote_start_date &&
+      Date.now() >= new Date(vote_start_date).getTime();
 
     const isVoteEnded =
       isVoteEnabled &&
-      new Date(task.vote_end_date || "0").getTime() <= Date.now();
+      new Date(vote_end_date || "0").getTime() <= Date.now();
 
     const voteLeftTime = Math.max(
       0,
-      new Date(task.vote_end_date || "0").getTime() - Date.now()
+      new Date(vote_end_date || "0").getTime() - Date.now()
     );
 
-    const obfuscatedEmail = task.email ? obfuscateEmail(task.email) : "";
+    const obfuscatedEmail = email ? obfuscateEmail(email) : "";
 
     const isAuthor = !!user && user.email === task.email;
 
     return NextResponse.json({
       code: 0,
       data: {
-        ...task,
+        nftId,
+        URI,
+        approved,
+        created_at,
+        status,
+        xHandle,
+        metadata: (lang === "zh" ? task.metadata_zh : task.metadata_en) || metadata,
         email: isAuthor ? task.email : obfuscatedEmail,
         isAuthor,
         isVoteEnabled,
         isVoteEnded,
         voteLeftTime,
+        vote_start_date,
+        vote_end_date,
         // voteLeftTime: 0,
       },
     });

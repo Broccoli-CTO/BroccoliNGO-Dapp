@@ -172,7 +172,7 @@ export const ProofView: FC<Props> = ({ admin, tokenId }) => {
 
   return (
     <CardContainer>
-      <CardTitle>Proofs</CardTitle>
+      <CardTitle>{trans(_TL_("Proofs"))}</CardTitle>
       {proofLoading ? (
         <Spinner />
       ) : (
@@ -246,7 +246,7 @@ export const ProofView: FC<Props> = ({ admin, tokenId }) => {
           disabled={isProofDisabled}
           onClick={handleAddProofs}
         >
-          Upload
+          {trans(_TL_("Upload"))}
         </SubmitButton>
       ) : null}
     </CardContainer>

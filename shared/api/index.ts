@@ -4,7 +4,8 @@ import {
   NFTMetaData,
   RescueNFTMetaData,
   RescueRequest,
-} from "../types/rescue";
+} from "@/shared/types/rescue";
+import { Task } from "@/shared/types/task";
 
 const BaseURI = "";
 
@@ -154,8 +155,14 @@ export const submitVote = async (
   return res.json();
 };
 
-export const fetchTaskDetail = async (id: string) => {
-  const res = await fetch(`${BaseURI}/api/task/${id}`);
+export const fetchTaskDetail = async (
+  id: string,
+  lang = "en"
+): Promise<{
+  code: number;
+  data: Task;
+}> => {
+  const res = await fetch(`${BaseURI}/api/task/${id}?lang=${lang}`);
   return res.json();
 };
 

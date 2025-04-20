@@ -329,10 +329,10 @@ export const NFTMetaDataToRescueRequestForms = (
       ?.value,
     country: metadata.attributes
       .find((attr) => attr.trait_type === "location")
-      ?.value.split(",")[0],
+      ?.value.split(/\,|\，/)[0],
     city: metadata.attributes
       .find((attr) => attr.trait_type === "location")
-      ?.value.split(",")[1],
+      ?.value.split(/\,|\，/)[1],
   } as RescueRequest["contact"];
   const backgroundForm = {
     context: metadata.description,

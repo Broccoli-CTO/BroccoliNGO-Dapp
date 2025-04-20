@@ -123,7 +123,7 @@ export const VotesView: FC<VotesViewProps> = ({ tokenId, admin }) => {
         type: "error",
       });
     }
-    await refreshFundRecords();
+    refreshFundRecords();
     setVoteResultUploading(false);
   };
 
@@ -207,21 +207,24 @@ export const VotesView: FC<VotesViewProps> = ({ tokenId, admin }) => {
       {isVoteEnded ? (
         <>
           <CardTitle>
-            Voting ended:{" "}
+            {trans(_TL_("Voting ended"))}:{" "}
             <CardTitleTip color={items.find((i) => i.winner)?.winnerColor}>
-              Result is {"{"}
+              {trans(_TL_("Result is"))} {"{"}
               {items.find((i) => i.winner)?.title}
               {"}"}
             </CardTitleTip>
           </CardTitle>
         </>
       ) : admin ? (
-        <CardTitle>Voting Status</CardTitle>
+        <CardTitle>{trans(_TL_("Voting Status"))}</CardTitle>
       ) : (
         <CardTitle>
-          Cast your vote:{" "}
+          {trans(_TL_("Cast your vote"))}:{" "}
           <CardTitleTip>
-            You have {formatVotes(balance)} votes in total
+            {trans(_TL_("You have #{{balance}} votes in total"), {
+              balance: formatVotes(balance),
+            })}
+            {/* You have {formatVotes(balance)} votes in total */}
           </CardTitleTip>
         </CardTitle>
       )}
@@ -269,7 +272,9 @@ export const VotesView: FC<VotesViewProps> = ({ tokenId, admin }) => {
                   </VoteItemText>
                 </RadioCard.ItemText>
                 <VoteItemPercent lose={isVoteEnded && !item.winner}>
-                  <span>{formatVotes(item.num)} VOTES</span>
+                  <span>
+                    {formatVotes(item.num)} {trans(_TL_("VOTES"))}
+                  </span>
                   <span>{getPercent(item.num)}%</span>
                 </VoteItemPercent>
                 {/* <RadioCard.ItemIndicator /> */}
@@ -284,13 +289,17 @@ export const VotesView: FC<VotesViewProps> = ({ tokenId, admin }) => {
             disabled={voteSubmitting || isVoted || (address && !balance)}
             onClick={handleVote}
           >
-            {address && !balance ? "No votes" : isVoted ? "Voted" : "Vote"}
+            {address && !balance
+              ? trans(_TL_("No votes"))
+              : isVoted
+              ? trans(_TL_("Voted"))
+              : trans(_TL_("Vote"))}
           </SubmitButton>
         )}
 
         {task?.voteLeftTime ? (
           <VoteEndTime>
-            Voting ends in{" "}
+            {trans(_TL_("Voting ends in"))}{" "}
             <b>
               <TimerCountDown
                 leftTime={task?.voteLeftTime || 0}
@@ -304,12 +313,13 @@ export const VotesView: FC<VotesViewProps> = ({ tokenId, admin }) => {
         {onchainVoteResultURL && isVoteEnded ? (
           <StyledVoteResultLink>
             <a href={onchainVoteResultURL} target="_blank">
-              <b>Result OnChain:</b> <span>{onchainVoteResultURL}</span>
+              <b>{trans(_TL_("Result OnChain"))}:</b>{" "}
+              <span>{onchainVoteResultURL}</span>
             </a>
           </StyledVoteResultLink>
         ) : null}
 
-        <VotesListTit>Number of votes</VotesListTit>
+        <VotesListTit>{trans(_TL_("Number of votes"))}</VotesListTit>
         <VotesListContent>
           {votes.length ? (
             <VotesListContentContainer>
@@ -335,10 +345,12 @@ export const VotesView: FC<VotesViewProps> = ({ tokenId, admin }) => {
                     </VotesListItemLeft>
                     <VotesListItemRight>
                       <VotesListItemResult>
-                        {item.result === 0 ? "NO" : "YES"}
+                        {item.result === 0
+                          ? trans(_TL_("NO"))
+                          : trans(_TL_("YES"))}
                       </VotesListItemResult>
                       <VotesListItemNum>
-                        {formatVotes(item.balance)} VOTES
+                        {formatVotes(item.balance)} {trans(_TL_("Votes"))}
                       </VotesListItemNum>
                     </VotesListItemRight>
                   </VotesListItem>
@@ -394,10 +406,10 @@ export const VotesView: FC<VotesViewProps> = ({ tokenId, admin }) => {
           onClick={handleUploadVoteResult}
         >
           {onchainVoteMetadata
-            ? "Upload complete"
+            ? trans(_TL_("Upload complete"))
             : !isVoteEnded
-            ? "Voting hasn't ended yet"
-            : "Upload Vote Result onchain"}
+            ? trans(_TL_("Voting hasn't ended yet"))
+            : trans(_TL_("Upload Vote Result onchain"))}
         </SubmitButton>
       ) : null}
     </CardContainer>

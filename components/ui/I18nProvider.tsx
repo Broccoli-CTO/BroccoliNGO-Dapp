@@ -1,8 +1,15 @@
 import React, { useEffect } from "react";
+import Cookies from 'js-cookie';
 import localeEn from "@/dictionaries/en.json";
 import localeZh from "@/dictionaries/zh.json";
 
-const i18nContext = React.createContext<Record<string, string>>({});
+const i18nContext = React.createContext({
+  lang: 'en',
+  messages: localeEn,
+} as {
+  lang: string;
+  messages: Record<string, any>;
+});
 
 export function I18nProvider({ children, locale }: { children: React.ReactNode; locale: string }) {
 
@@ -12,19 +19,24 @@ export function I18nProvider({ children, locale }: { children: React.ReactNode; 
   }
   const [messages, setMessages] = React.useState(localeMap[locale] || localeEn);
 
+  useEffect(() => {
+    Cookies.set('lang', locale, { expires: 7, path: '/' });
+  })
+
   return (
-    <i18nContext.Provider value={messages}>
+    <i18nContext.Provider value={{lang: locale, messages}}>
       {children}
     </i18nContext.Provider>
   );
 }
 
 export function useI18n() {
-  const context = React.useContext(i18nContext);
+  const { lang, messages} = React.useContext(i18nContext);
   
   return {
+    lang,
     trans(key: string, replace: Record<string, any> = {}) {
-      const str = context[key] || key;
+      const str = messages[key] || key;
       const parts = Object.keys(replace).reduce((acc: (string | React.ReactNode)[], replaceKey) => {
         const newParts: (string | React.ReactNode)[] = [];
         acc.forEach(part => {

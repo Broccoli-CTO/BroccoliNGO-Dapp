@@ -32,8 +32,6 @@ export default function TaskDetailPageContent({ id }: { id: string }) {
 
   return (
     <Container>
-      <TaskNavbar />
-
       <DatasView email={task?.email} />
 
       {task?.isVoteEnabled && <VotesView tokenId={id} />}
@@ -55,6 +53,7 @@ const Container = styled.div`
   flex-direction: column;
   gap: 20px;
   @media screen and (max-width: 768px) {
+    padding-top: 80px;
     padding-left: 20px;
     padding-right: 20px;
   }
