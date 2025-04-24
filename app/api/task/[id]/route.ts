@@ -2,7 +2,6 @@
 import { userAuth } from "@/shared/server/auth";
 import { supabaseClient } from "@/shared/supabase";
 import { obfuscateEmail } from "@/shared/utils";
-import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -12,7 +11,7 @@ export async function GET(
   try {
     const id = (await params).id;
     const { searchParams } = new URL(request.url);
-    const lang = searchParams.get("lang") || "en";
+    const lang = searchParams.get("lang") || "raw";
 
     const { user } = await userAuth(false);
 
@@ -36,15 +35,26 @@ export async function GET(
       throw new Error("Task not found", { cause: 404 });
     }
 
-    const { nftId, URI, approved, created_at, status, xHandle, metadata_en, metadata_zh, metadata, email, vote_start_date, vote_end_date } = task
+    const {
+      nftId,
+      URI,
+      approved,
+      created_at,
+      status,
+      xHandle,
+      metadata_en,
+      metadata_zh,
+      metadata,
+      email,
+      vote_start_date,
+      vote_end_date,
+    } = task;
 
     const isVoteEnabled =
-      !!vote_start_date &&
-      Date.now() >= new Date(vote_start_date).getTime();
+      !!vote_start_date && Date.now() >= new Date(vote_start_date).getTime();
 
     const isVoteEnded =
-      isVoteEnabled &&
-      new Date(vote_end_date || "0").getTime() <= Date.now();
+      isVoteEnabled && new Date(vote_end_date || "0").getTime() <= Date.now();
 
     const voteLeftTime = Math.max(
       0,
@@ -64,7 +74,10 @@ export async function GET(
         created_at,
         status,
         xHandle,
-        metadata: (lang === "zh" ? task.metadata_zh : task.metadata_en) || metadata,
+        metadata:
+          lang === "raw"
+            ? metadata
+            : (lang === "zh" ? task.metadata_zh : task.metadata_en) || metadata,
         email: isAuthor ? task.email : obfuscatedEmail,
         isAuthor,
         isVoteEnabled,
