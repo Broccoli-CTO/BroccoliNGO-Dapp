@@ -157,12 +157,18 @@ export const submitVote = async (
 
 export const fetchTaskDetail = async (
   id: string,
-  lang = "en"
+  lang = "en",
+  config = {
+    BaseURI: "",
+  }
 ): Promise<{
   code: number;
   data: Task;
+  config?: {
+    BaseURI?: string;
+  };
 }> => {
-  const res = await fetch(`${BaseURI}/api/task/${id}?lang=${lang}`);
+  const res = await fetch(`${config.BaseURI}/api/task/${id}?lang=${lang}`);
   return res.json();
 };
 

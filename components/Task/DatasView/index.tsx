@@ -83,7 +83,7 @@ export const DatasView: FC<DatasViewProps> = ({ email }) => {
               </StyledDataListItemValue>
             ) : (
               <StyledDataListItemValue>
-                {item.label === "Email" ? email : item.value}
+                {item.label === "email" ? email : item.value}
               </StyledDataListItemValue>
             )}
           </StyledDataListItem>

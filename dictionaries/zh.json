@@ -144,10 +144,10 @@
   "Result OnChain": "投票结果已上链",
   "Upload Vote Result onchain": "上传投票结果上链",
   "Upload complete": "投票结果已上传",
-  "VOTES": "票数",
+  "VOTES": "票",
   "Vote": "投票",
   "Voted": "投票已结束",
-  "Votes": "票数",
+  "Votes": "票",
   "Voting ends in": "投票倒计时",
   "Voting hasn't ended yet": "投票暂时还未结束"
 }
