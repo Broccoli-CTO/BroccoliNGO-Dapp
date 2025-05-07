@@ -68,6 +68,17 @@ pnpm install
 yarn install
 ```
 
+If you see the following error:
+```
+pnpm : The term 'pnpm' is not recognized as the name of a cmdlet, function, script file, or operable program.
+```
+
+It means `pnpm` is not installed globally on your system. You can install it in advance using:
+
+```bash
+npm install -g pnpm
+```
+
 3. Set up environment variables:
 
 ```bash
